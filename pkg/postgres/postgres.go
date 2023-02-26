@@ -2,11 +2,12 @@ package postgres
 
 import (
 	"fmt"
-	"github.com/jinzhu/gorm"
-	_ "github.com/lib/pq"
 	"os"
 	"strconv"
-	"testCase/config"
+	"taskService/config"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq"
 )
 
 type Postgres struct {
