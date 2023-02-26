@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
+	"taskService/app"
 
 	"taskService/config"
 )
 
 func main() {
 	cfg := config.NewConfig()
-	fmt.Println(cfg)
+	app.Run(cfg)
 }
