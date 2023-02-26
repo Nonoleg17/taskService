@@ -1,9 +1,8 @@
 package main
 
 import (
-	"taskService/app"
-
 	"taskService/config"
+	"taskService/internal/app"
 )
 
 func main() {
