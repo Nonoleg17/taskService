@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"taskService/config"
 
-	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
+	"gorm.io/gorm"
 )
 
 type Postgres struct {
