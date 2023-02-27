@@ -23,10 +23,10 @@ func Run(cfg *config.Config) {
 		l.Fatal(fmt.Errorf("app - Run - postgres.New: %w", err))
 	}
 
-	userUsecase := usecase.NewUserCase(repo.NewUserRepo(pg))
+	userСase := usecase.NewUserCase(repo.NewUserRepo(pg))
 
 	handler := gin.New()
-	http.NewRouter(handler, l, userUsecase)
+	http.NewRouter(handler, l, userСase)
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTPPort))
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)

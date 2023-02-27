@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   postgres:
@@ -11,16 +11,9 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+    volumes:
+      - ./config/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-migrate:
-        image: migrate/migrate
-        networks:
-            - network
-        volumes:
-            - .:/migrations
-        command: ["-path", "/config/migrations", "-database",  "postgresql://postgres:postgres@postgres:5432/postgres?sslmode=disable", "up", "3"]
-        links: 
-            - d
 networks:
   network:
     driver: bridge

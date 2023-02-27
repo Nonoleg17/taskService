@@ -7,8 +7,8 @@ import (
 
 type (
 	User interface {
-		CreateUser(context.Context, *entity.User) (*entity.User, error)
-		Login(context.Context, string) (*entity.User, error)
+		CreateUser(context.Context, *entity.CreateUserReq) (*entity.CreateUserRes, error)
+		Login(context.Context, *entity.LoginUserReq) (*entity.LoginUserRes, error)
 	}
 
 	UserRepo interface {

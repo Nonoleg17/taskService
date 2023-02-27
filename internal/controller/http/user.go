@@ -3,8 +3,8 @@ package http
 import (
 	"net/http"
 	"taskService/internal/entity"
-	"testCase/internal/usecase"
-	"testCase/pkg/logger"
+	"taskService/internal/usecase"
+	"taskService/pkg/logger"
 
 	"github.com/gin-gonic/gin"
 )

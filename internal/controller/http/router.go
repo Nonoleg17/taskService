@@ -1,8 +1,8 @@
 package http
 
 import (
-	"testService/internal/usecase"
-	"testService/pkg/logger"
+	"taskService/internal/usecase"
+	"taskService/pkg/logger"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"

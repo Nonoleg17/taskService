@@ -2,12 +2,11 @@ package postgres
 
 import (
 	"fmt"
-	"os"
+	_ "github.com/lib/pq"
+	postgres "gorm.io/driver/postgres"
+	"gorm.io/gorm"
 	"strconv"
 	"taskService/config"
-
-	_ "github.com/lib/pq"
-	"gorm.io/gorm"
 )
 
 type Postgres struct {
@@ -20,15 +19,11 @@ func New(db *config.Config) (*Postgres, error) {
 		db.Address, strconv.Itoa(db.Port), db.User, db.Password, db.Basename)
 
 	// Opens a new DB and attempts a Ping
-	dbConn, err := gorm.Open("postgres", dbInfo)
+	dbConn, err := gorm.Open(postgres.Open(dbInfo), &gorm.Config{})
 
 	if err != nil {
 		return nil, err
 	}
-	if _, ok := os.LookupEnv("POSTGRES_LOG"); ok {
-		dbConn.LogMode(true)
-	}
-	dbConn.Update()
 	pg := &Postgres{
 		DbConnect: dbConn,
 	}

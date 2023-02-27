@@ -27,6 +27,6 @@ func (ur *UserRepo) CreateUser(ctx context.Context, user *entity.User) (*entity.
 }
 
 func (ur *UserRepo) GetUserByEmail(ctx context.Context, email string) (*entity.User, error) {
-	//RODO доделать
+
 	return nil, nil
 }

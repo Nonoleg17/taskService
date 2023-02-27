@@ -46,7 +46,7 @@ func (uc *UserCase) CreateUser(c context.Context, req *entity.CreateUserReq) (*e
 
 }
 
-func (ur *UserCase) Login(c context.Context, email string) (*entity.LoginUserRes, error) {
+func (ur *UserCase) Login(c context.Context, req *entity.LoginUserReq) (*entity.LoginUserRes, error) {
 	//TODO доделать
 	return nil, nil
 }
