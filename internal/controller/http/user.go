@@ -39,4 +39,18 @@ func (r *userRoutes) Register(c *gin.Context) {
 	c.JSON(http.StatusOK, res)
 }
 func (r *userRoutes) Login(c *gin.Context) {
+	var request *entity.LoginUserReq
+	if err := c.ShouldBindJSON(&request); err != nil {
+		r.l.Error(err, "http - Login")
+		errorResponse(c, http.StatusBadRequest, "invalid request body")
+		return
+	}
+	res, err := r.u.Login(c.Request.Context(), request)
+	if err != nil {
+		r.l.Error(err, "http - Encode")
+		errorResponse(c, http.StatusInternalServerError, "Login problem")
+		return
+	}
+	c.JSON(http.StatusOK, res)
+
 }
