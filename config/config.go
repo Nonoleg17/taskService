@@ -10,9 +10,10 @@ import (
 type (
 	// Config -.
 	Config struct {
-		HTTP `json:"http"`
-		Log  `json:"logger"`
-		PG   `json:"postgres"`
+		HTTP  `json:"http"`
+		Log   `json:"logger"`
+		PG    `json:"postgres"`
+		Redis `json:"redis"`
 	}
 
 	// HTTP -.
@@ -33,6 +34,12 @@ type (
 		User     string `json:"user"`
 		Password string `json:"password"`
 	}
+	Redis struct {
+		Address  string `json:"address"`
+		User     string `json:"user"`
+		Password string `json:"password"`
+		Base     int    `json:"base"`
+	}
 )
 
 func NewConfig() *Config {
@@ -43,6 +50,13 @@ func NewConfig() *Config {
 		log.Warn("No postgres port passed. Using default 5432 PostgreSQL port")
 		// web server local port
 		pgPort = 5432
+	}
+	value, ok = os.LookupEnv("REDIS_BASE")
+	rdDb, err := strconv.Atoi(value)
+	if !ok || err != nil {
+		log.Warn("No redis db passed. Using default Redis  db")
+		// web server local port
+		rdDb = 0
 	}
 	value, ok = os.LookupEnv("HTTP_PORT")
 	cfg := &Config{
@@ -58,6 +72,12 @@ func NewConfig() *Config {
 		},
 		Log: Log{
 			Level: os.Getenv("LOG_LEVEL"),
+		},
+		Redis: Redis{
+			Address:  os.Getenv("REDIS_ADDR"),
+			User:     os.Getenv("REDIS_USER"),
+			Password: os.Getenv("REDIS_PASSWORD"),
+			Base:     rdDb,
 		},
 	}
 
