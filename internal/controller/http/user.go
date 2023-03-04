@@ -45,12 +45,13 @@ func (r *userRoutes) Login(c *gin.Context) {
 		errorResponse(c, http.StatusBadRequest, "invalid request body")
 		return
 	}
-	res, err := r.u.Login(c.Request.Context(), request)
+	res, session, err := r.u.Login(c.Request.Context(), request)
 	if err != nil {
 		r.l.Error(err, "http - Encode")
 		errorResponse(c, http.StatusInternalServerError, "Login problem")
 		return
 	}
+	c.SetCookie("session_token", session.Value, int(session.Expire), "/", "localhost", false, false)
 	c.JSON(http.StatusOK, res)
 
 }

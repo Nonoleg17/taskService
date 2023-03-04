@@ -10,20 +10,22 @@ type SessionRepo struct {
 	db *redis.Redis
 }
 
-func New(db *redis.Redis) *SessionRepo {
+func NewSessionRepo(db *redis.Redis) *SessionRepo {
 	return &SessionRepo{
 		db: db,
 	}
 }
 
 func (sr *SessionRepo) Set(token, username string) (*entity.Session, error) {
-	session := entity.Session{
-		Username: username,
-	}
 
-	err := sr.db.DbConnect.Set(token, session, 24*time.Hour).Err()
+	err := sr.db.DbConnect.Set(token, username, 24*time.Hour).Err()
 	if err != nil {
 		return nil, err
+	}
+	session := entity.Session{
+		Username: username,
+		Value:    token,
+		Expire:   24 * time.Hour,
 	}
 	return &session, nil
 }

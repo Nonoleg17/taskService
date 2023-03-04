@@ -16,7 +16,7 @@ type Postgres struct {
 func New(db *config.Config) (*Postgres, error) {
 
 	dbInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		db.Address, strconv.Itoa(db.Port), db.User, db.Password, db.Basename)
+		db.PG.Address, strconv.Itoa(db.PG.Port), db.PG.User, db.PG.Password, db.PG.Basename)
 
 	// Opens a new DB and attempts a Ping
 	dbConn, err := gorm.Open(postgres.Open(dbInfo), &gorm.Config{})

@@ -12,6 +12,7 @@ import (
 	"taskService/pkg/httpserver"
 	"taskService/pkg/logger"
 	"taskService/pkg/postgres"
+	"taskService/pkg/redis"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,8 +23,12 @@ func Run(cfg *config.Config) {
 	if err != nil {
 		l.Fatal(fmt.Errorf("app - Run - postgres.New: %w", err))
 	}
+	rd, err := redis.New(cfg)
+	if err != nil {
+		l.Fatal(fmt.Errorf("app - Run - redis.New: %w", err))
+	}
 
-	userСase := usecase.NewUserCase(repo.NewUserRepo(pg))
+	userСase := usecase.NewUserCase(repo.NewUserRepo(pg), repo.NewSessionRepo(rd))
 
 	handler := gin.New()
 	http.NewRouter(handler, l, userСase)

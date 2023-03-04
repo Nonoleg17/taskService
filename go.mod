@@ -1,11 +1,10 @@
 module taskService
 
-go 1.18
+go 1.20
 
 require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-redis/redis v6.15.9+incompatible
-	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/google/uuid v1.3.0
 	github.com/lib/pq v1.10.7
 	github.com/rs/zerolog v1.29.0

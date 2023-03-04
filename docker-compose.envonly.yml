@@ -13,6 +13,14 @@ services:
       - "5432:5432"
     volumes:
       - ./config/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+  redis:
+    image: 'bitnami/redis:latest'
+    restart: always
+    ports:
+        - '6379:6379'
+    environment:
+      REDIS_PASSWORD: 'pass123'
+
 
 networks:
   network:

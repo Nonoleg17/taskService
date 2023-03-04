@@ -53,33 +53,21 @@ func (uc *UserCase) CreateUser(c context.Context, req *entity.CreateUserReq) (*e
 
 }
 
-func (uc *UserCase) Login(c context.Context, req *entity.LoginUserReq) (*entity.LoginUserRes, error) {
+func (uc *UserCase) Login(c context.Context, req *entity.LoginUserReq) (*entity.LoginUserRes, *entity.Session, error) {
 	ctx, cansel := context.WithTimeout(c, uc.timeout)
 	defer cansel()
 	user, err := uc.userRepo.GetUserByEmail(ctx, req.Email)
 	if err != nil {
-		return &entity.LoginUserRes{}, err
+		return &entity.LoginUserRes{}, &entity.Session{}, err
 	}
 	token := uuid.NewString()
 	session, err := uc.sessionRepo.Set(token, user.Username)
 	if err != nil {
-		return &entity.LoginUserRes{}, err
+		return &entity.LoginUserRes{}, &entity.Session{}, err
 	}
-	//token := jwt.NewWithClaims(jwt.SigningMethodHS256, MyJWTClaims{
-	//	ID:       strconv.Itoa(int(user.ID)),
-	//	Username: user.Username,
-	//	RegisteredClaims: jwt.RegisteredClaims{
-	//		Issuer:    strconv.Itoa(int(user.ID)),
-	//		ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
-	//	},
-	//})
-	//signedStr, err := token.SignedString([]byte(secretKey))
-	//if err != nil {
-	//	return &entity.LoginUserRes{}, err
-	//}
-	//return &entity.LoginUserRes{
-	//	AccessToken: signedStr,
-	//	Username:    user.Username,
-	//	ID:          strconv.Itoa(int(user.ID)),
-	//}, nil
+
+	return &entity.LoginUserRes{
+		Username: user.Username,
+		ID:       strconv.Itoa(int(user.ID)),
+	}, session, nil
 }
