@@ -1,0 +1,17 @@
+FROM alpine:3.17 AS base
+
+RUN mkdir /goose
+WORKDIR /goose
+
+RUN apk update && apk upgrade && apk search curl && apk add curl
+
+RUN curl -f \
+    https://raw.githubusercontent.com/pressly/goose/master/install.sh >> ./install.sh
+
+RUN sh ./install.sh
+
+FROM base AS test
+RUN mkdir /goose/migration_files
+COPY ./config/migrations /goose/migration_files
+
+ENTRYPOINT ["/usr/local/bin/goose", "-dir", "/goose/migration_files"]

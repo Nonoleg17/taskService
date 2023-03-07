@@ -9,10 +9,26 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data'
     ports:
       - "5432:5432"
-    volumes:
-      - ./config/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+  migrator:
+    networks:
+      - network
+    build:
+      dockerfile: Dockerfile.migrator
+      context: .
+    healthcheck:
+      test: [ "CMD", "/usr/local/bin/goose", "status" ]
+      retries: 3
+      interval: 5s
+    restart: on-failure
+    environment:
+      GOOSE_DRIVER: postgres
+      GOOSE_DBSTRING: postgres://postgres:postgres@postgres:5432/postgres
+    command:
+      - up
   redis:
     image: 'bitnami/redis:latest'
     restart: always
@@ -21,6 +37,8 @@ services:
     environment:
       REDIS_PASSWORD: 'pass123'
 
+volumes:
+  pg_data:
 
 networks:
   network:
