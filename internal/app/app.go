@@ -29,9 +29,9 @@ func Run(cfg *config.Config) {
 	}
 
 	userСase := usecase.NewUserCase(repo.NewUserRepo(pg), repo.NewSessionRepo(rd))
-
+	taskCase := usecase.NewTaskCase(repo.NewTaskRepo(pg))
 	handler := gin.New()
-	http.NewRouter(handler, l, userСase)
+	http.NewRouter(handler, l, userСase, taskCase)
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTPPort))
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)

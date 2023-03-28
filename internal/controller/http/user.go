@@ -32,7 +32,7 @@ func (r *userRoutes) Register(c *gin.Context) {
 	}
 	res, err := r.u.CreateUser(c.Request.Context(), request)
 	if err != nil {
-		r.l.Error(err, "http - Encode")
+		r.l.Error(err, "http - Register")
 		errorResponse(c, http.StatusInternalServerError, "Create user problem")
 		return
 	}
@@ -47,7 +47,7 @@ func (r *userRoutes) Login(c *gin.Context) {
 	}
 	res, session, err := r.u.Login(c.Request.Context(), request)
 	if err != nil {
-		r.l.Error(err, "http - Encode")
+		r.l.Error(err, "http - Login")
 		errorResponse(c, http.StatusInternalServerError, "Login problem")
 		return
 	}

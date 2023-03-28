@@ -10,7 +10,7 @@ type TaskRepo struct {
 	pg *postgres.Postgres
 }
 
-func New(pg *postgres.Postgres) *TaskRepo {
+func NewTaskRepo(pg *postgres.Postgres) *TaskRepo {
 	return &TaskRepo{
 		pg: pg,
 	}

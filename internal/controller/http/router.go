@@ -9,7 +9,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-func NewRouter(handler *gin.Engine, l logger.Interface, u usecase.User) {
+func NewRouter(handler *gin.Engine, l logger.Interface, u usecase.User, t usecase.Task) {
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
 	swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
@@ -17,6 +17,7 @@ func NewRouter(handler *gin.Engine, l logger.Interface, u usecase.User) {
 	h := handler.Group("/")
 	{
 		newUserRoutes(h, u, l)
+		newTaskRoutes(h, u, t, l)
 	}
 
 }

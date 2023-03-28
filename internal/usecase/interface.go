@@ -9,6 +9,7 @@ type (
 	User interface {
 		CreateUser(context.Context, *entity.CreateUserReq) (*entity.CreateUserRes, error)
 		Login(context.Context, *entity.LoginUserReq) (*entity.LoginUserRes, *entity.Session, error)
+		Check(string) error
 	}
 	Task interface {
 		Create(context.Context, *entity.Task) (*entity.Task, error)

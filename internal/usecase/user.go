@@ -71,3 +71,10 @@ func (uc *UserCase) Login(c context.Context, req *entity.LoginUserReq) (*entity.
 		ID:       strconv.Itoa(int(user.ID)),
 	}, session, nil
 }
+
+func (uc *UserCase) Check(token string) error {
+	if err := uc.sessionRepo.Get(token); err != nil {
+		return err
+	}
+	return nil
+}
